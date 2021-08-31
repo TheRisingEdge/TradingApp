@@ -16,6 +16,17 @@ namespace TradingApp.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TradeEntityConfig());
+
+            //modelBuilder.Entity<Trade>(b => {
+            //    var trade = (Trade)Activator.CreateInstance(typeof(Trade), true);
+            //    trade.Id = 1;
+
+            //    b.HasData(trade);
+            //    b.OwnsOne(x => x.TradeId).HasData(TradeId.TryCreate("UIBHGYTNHUJM*&").Value);
+            //    //b.OwnsOne(x => x.Price).HasData(TradePrice.TryCreate(23).Value);
+            //    //b.OwnsOne(x => x.SecurityCode).HasData(SecurityCode.TryCreate("ABM").Value);
+            //    //b.OwnsOne(x => x.SequenceNumber).HasData(SequenceNumber.TryCreate("asdf", 4).Value);
+            //});
         }
 
         public void DeleteByIds<T>(IEnumerable<IdOf<T>> ids) where T : class, IHasId

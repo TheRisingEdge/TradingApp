@@ -14,9 +14,9 @@ namespace TradingApp.Controllers
                 var result = await task;
                 return new OkObjectResult(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 

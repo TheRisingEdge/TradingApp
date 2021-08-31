@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import DatePicker from "react-datepicker";
-
+import "react-datepicker/dist/react-datepicker.css";
 import { TradesApi, CreateTradeRequest } from "./api/trades.api";
+
+require('react-datepicker/dist/react-datepicker.css')
+
 
 export function CreateTrade() {
     return <Test />
@@ -42,6 +45,7 @@ const Test = () => {
                             name="firstName"
                             placeholder="John"
                         />
+                        <br/>
 
                         <label htmlFor="lastName">Trade Price</label>
                         <Field
@@ -49,6 +53,7 @@ const Test = () => {
                             name="lastName"
                             placeholder="Doe"
                         />
+                        <br/>
 
                         <label htmlFor="email">Email</label>
                         <Field
@@ -57,7 +62,9 @@ const Test = () => {
                             placeholder="john@acme.com"
                             type="email"
                         />
+                        <br/>
 
+                        <label htmlFor="date">Date</label>
                         <DatePicker
                             selected={values.startDate}
                             dateFormat="MMMM d, yyyy"
@@ -66,6 +73,7 @@ const Test = () => {
                             onChange={date => setFieldValue('startDate', date)}
                         />
 
+                        <br/>
                         <button type="submit">Submit</button>
                     </Form>
                 )}

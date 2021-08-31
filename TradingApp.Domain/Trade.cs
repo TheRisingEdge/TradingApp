@@ -11,8 +11,7 @@ namespace TradingApp.Domain
         public TradePrice Price { get; private set; }
         public SequenceNumber SequenceNumber { get; private set; }
         public DateTime Date { get; private set; }
-
-        private Trade() { }
+        public Trade() { }
 
         public static Result<Trade> TryCreate(
             TradeId tradeId,

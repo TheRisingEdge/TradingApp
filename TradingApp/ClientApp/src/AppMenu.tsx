@@ -5,14 +5,12 @@ import { AppRoutes } from "./AppRoutes";
 export function AppMenu() {
     return (
         <nav>
-            <ul>
-                <li>
-                    <Link to={AppRoutes.home}>Trades</Link>
-                </li>
-                <li>
-                    <Link to={AppRoutes.createTrade}>Create Trade</Link>
-                </li>
-            </ul>
+            <span>
+                <Link to={AppRoutes.home}>Trades</Link>
+            </span>
+            <span>
+                <Link to={AppRoutes.createTrade}>Create Trade</Link>
+            </span>
         </nav>
     );
 }
