@@ -12,7 +12,7 @@ namespace TradingApp.Application
         public string SecurityCode { get; set; }
         public int Price { get; set; }
         public DateTime Date { get; set; }
-        public int SequenceNumberDigitsLength { get; set; }
+        public int SequenceNumberLength { get; set; }
         public string SequenceNumber { get; set; }
     }
 
@@ -36,7 +36,7 @@ namespace TradingApp.Application
         {
             var price = TradePrice.TryCreate(request.Price);
             var securityCode = SecurityCode.TryCreate(request.SecurityCode);
-            var sequenceNumber = SequenceNumber.TryCreate(request.SequenceNumber, request.SequenceNumberDigitsLength);
+            var sequenceNumber = SequenceNumber.TryCreate(request.SequenceNumber, request.SequenceNumberLength);
             var tradeId = await sequenceNumber.Map(x => _uniqueTradeIds.GenerateFrom(x, cancellationToken));
 
             var trade = Result.Combine(tradeId, price, securityCode, sequenceNumber)

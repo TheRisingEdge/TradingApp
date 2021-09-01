@@ -28,7 +28,7 @@ namespace TradingApp.Controllers
             return _mediator.Send(request).ToResponse();
         }
 
-        [HttpPost]
+        [HttpDelete]
         public Task<IActionResult> DeleteTrades([FromBody] DeleteTradesRequest request)
         {
             return _mediator.Send(request).ToResponse();

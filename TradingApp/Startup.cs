@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using TradingApp.Application;
 
 namespace TradingApp
@@ -26,6 +27,10 @@ namespace TradingApp
             services.AddAutoMapper(TradingApplication.Assembly);
 
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TradingApp.WebApi", Version = "v1" });
+            });
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -38,6 +43,8 @@ namespace TradingApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TradingApp.WebApi v1"));
             }
             else
             {
@@ -45,7 +52,7 @@ namespace TradingApp
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

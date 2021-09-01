@@ -14,9 +14,11 @@ type Trade = {
 }
 
 async function fetchTrades(): Promise<Trade[]> {
+    type Response = { trades: Trade[]};
+
     var result = await fetch('/api/trades')
     var data = await result.json();
-    return data as Trade[];
+    return (data as Response).trades;
 }
 
 function deleteTrades(p: any): Promise<number> {

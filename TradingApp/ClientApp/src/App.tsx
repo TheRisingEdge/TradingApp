@@ -7,7 +7,7 @@ import {
 import { AppMenu } from "./AppMenu";
 
 import { AppRoutes } from "./AppRoutes"
-import { CreateTrade } from "./pages/createTrade.page";
+import { CreateTrade } from "./pages/CreateTrade.page";
 import { Trades } from "./pages/viewAllTrades.page";
 
 export default function App() {
