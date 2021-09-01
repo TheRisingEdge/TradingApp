@@ -8,14 +8,11 @@ export type Trade = {
 }
 
 export async function fetchTrades(): Promise<Trade[]> {
-    type Response = { trades: Trade[]};
-
     var result = await fetch('/api/trades')
     var data = await result.json();
-    return (data as Response).trades;
+    return data.trades as Trade[];
 }
 
 function deleteTrades(p: any): Promise<number> {
     return Promise.resolve(1);
 }
-

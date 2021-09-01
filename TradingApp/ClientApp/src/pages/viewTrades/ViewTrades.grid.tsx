@@ -42,4 +42,3 @@ export function ViewTradesGrid(props: ViewTradesGridProps) {
         </div>
     );
 }
-
