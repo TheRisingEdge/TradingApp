@@ -3,17 +3,21 @@ import { SearchBox } from "../../components/SearchBox";
 import { DeleteButton } from "../../components/DeleteButton";
 import { TradeGridRow, ViewTradesGrid } from "./ViewTrades.grid";
 import * as api from "./ViewTrades.api";
-import { Maybe, MaybeAsync } from "purify-ts";
+import { Maybe, MaybeAsync, NonEmptyList, Nothing } from "purify-ts";
 
-function mapTradeIdsFrom(tradeRows: TradeGridRow[]): Maybe<number[]> {
-    const ids = tradeRows.map(x => x.id);
-    return Maybe.fromPredicate(ids => ids.length > 0, ids);
-} 
+function tryDelete(selectedRows: TradeGridRow[]): MaybeAsync<boolean>  {
+    var ids = selectedRows.map(r => r.id);
 
-function tryDelete(selectedRows: TradeGridRow[]): MaybeAsync<unknown>  {
-    var deletingTrades = mapTradeIdsFrom(selectedRows)
-        .map(ids => new api.DeleteTradesRequest(ids))
-        .map(request => api.deleteTrades(request));
+    const nothing: Maybe<boolean> = Nothing;
+    const didNothing = MaybeAsync.liftMaybe(nothing);
+
+    const maybeDeleting = NonEmptyList.fromArray(ids)
+        .map(theIds => new api.DeleteTradesRequest(theIds))
+        .map(request => api.deleteTrades(request).then((r) => r.toMaybe()))
+        .map(deleting => MaybeAsync.fromPromise(() => deleting))
+        .orDefault(didNothing);
+
+    return maybeDeleting;
 }
 
 export function Trades() {
@@ -22,13 +26,13 @@ export function Trades() {
 
     const onSelectionChanged = (rows: TradeGridRow[]) => setSelectedRows(rows);
 
-    const refreshGrid = () : Promise<any> => 
-        api.filterTrades({})
+    const refreshGrid = () : Promise<any> => api
+        .filterTrades({})
         .then(trades => setTrades(trades));
 
     const onDelete = () => 
         tryDelete(selectedRows)
-        .chain(() => refreshGrid());
+        .map(() => refreshGrid());
 
     useEffect(() => {
         refreshGrid();

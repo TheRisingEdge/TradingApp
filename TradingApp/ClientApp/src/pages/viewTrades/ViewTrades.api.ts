@@ -1,3 +1,5 @@
+import { Either, Left, Right } from "purify-ts";
+
 export type Trade = {
     id: number,
     tradeId: string,
@@ -26,12 +28,19 @@ export async function filterTrades(request: FilterTradesRequest): Promise<Trade[
     return data.trades as Trade[];
 }
 
-export async function deleteTrades(request: DeleteTradesRequest): Promise<unknown> {
+export type DeleteTradesError = string;
+export type DeleteTradesOk = boolean;
+export type DeleteTradesResponse = Either<DeleteTradesError, DeleteTradesOk>;
+
+export async function deleteTrades(request: DeleteTradesRequest) : Promise<DeleteTradesResponse> {
     var httpResponse = await fetch('/api/trades', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(request)
     });
 
-    return httpResponse.json();
+    switch (httpResponse.status) {
+        case 200: return Right(<DeleteTradesOk>(true))
+        default: return Left(<DeleteTradesError>(await httpResponse.text()))
+    }
 }
