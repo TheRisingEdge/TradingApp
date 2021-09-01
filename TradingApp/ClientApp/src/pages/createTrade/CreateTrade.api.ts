@@ -6,7 +6,11 @@ export type CreateTradeRequest = {
     date: Date
 }
 
-export function postTrade(request: CreateTradeRequest) : Promise<Response> {
+type OkResponse = {}
+type BadResponse = {}
+export type CreateTradeResponse = OkResponse | BadResponse;
+
+export function createTrade(request: CreateTradeRequest) : Promise<Response> {
     return fetch('/api/trades', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },

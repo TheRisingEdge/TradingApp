@@ -49,8 +49,8 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
             <Formik
                 initialValues={initialFormValues}
                 validationSchema={validationSchema}
-                onSubmit={onFormikSubmit}
-            >
+                onSubmit={onFormikSubmit}>
+
                 {({ values, setFieldValue, errors }) => (
                     <Form>
                         <label htmlFor="securityCode">Security Code</label>

@@ -1,13 +1,13 @@
 import React, {  } from "react";
 import { useHistory } from "react-router";
-import { postTrade } from "./CreateTrade.api";
 import { CreateTradeForm, FormValues } from "./CreateTrage.form";
+import * as api from "./CreateTrade.api";
 
 export function CreateTrade() { 
     const history = useHistory();
 
-    const onSubmit = (v: FormValues) => {
-        return postTrade(v)
+    const onSubmit = (formValues: FormValues) => {
+        return api.createTrade(formValues)
             .then(() => history.goBack());
     }
 
