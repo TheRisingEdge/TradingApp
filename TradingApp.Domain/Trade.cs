@@ -6,10 +6,10 @@ namespace TradingApp.Domain
     public sealed class Trade : IHasId
     {
         public int Id { get; set; }
-        public TradeId TradeId { get; private set; }
-        public SecurityCode SecurityCode { get; private set; }
-        public TradePrice Price { get; private set; }
-        public SequenceNumber SequenceNumber { get; private set; }
+        public string TradeId { get; private set; }
+        public string SecurityCode { get; private set; }
+        public int Price { get; private set; }
+        public string SequenceNumber { get; private set; }
         public DateTime Date { get; private set; }
         public Trade() { }
 
@@ -22,11 +22,11 @@ namespace TradingApp.Domain
         {
             return new Trade()
             {
-                TradeId = tradeId,
-                Price = price,
+                TradeId = tradeId.Value,
+                Price = price.Value,
                 Date = date,
-                SecurityCode = securityCode,
-                SequenceNumber = sequenceNumber
+                SecurityCode = securityCode.Value,
+                SequenceNumber = sequenceNumber.Value
             };
         }
     }

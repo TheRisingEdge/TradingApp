@@ -34,7 +34,7 @@ export function ViewTradesGrid(props: ViewTradesGridProps) {
                 rowData={props.trades}
                 onSelectionChanged={onSelectionChanged}>
 
-                <AgGridColumn field="tradeId" filter={true} checkboxSelection={true}></AgGridColumn>
+                <AgGridColumn field="tradeId" checkboxSelection={true}></AgGridColumn>
                 <AgGridColumn field="securityCode"></AgGridColumn>
                 <AgGridColumn field="sequenceNumber"></AgGridColumn>
                 <AgGridColumn field="price"></AgGridColumn>

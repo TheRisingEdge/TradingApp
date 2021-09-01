@@ -17,10 +17,10 @@ namespace TradingApp.Application
         {
             profile.CreateMap<Trade, TradeDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.TradeId, opt => opt.MapFrom(s => s.TradeId.Value))
-                .ForMember(d => d.SecurityCode, opt => opt.MapFrom(s => s.SecurityCode.Value))
-                .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price.Value))
-                .ForMember(d => d.SequenceNumber, opt => opt.MapFrom(s => s.SequenceNumber.Value))
+                .ForMember(d => d.TradeId, opt => opt.MapFrom(s => s.TradeId))
+                .ForMember(d => d.SecurityCode, opt => opt.MapFrom(s => s.SecurityCode))
+                .ForMember(d => d.Price, opt => opt.MapFrom(s => s.Price))
+                .ForMember(d => d.SequenceNumber, opt => opt.MapFrom(s => s.SequenceNumber))
                 .ForMember(d => d.Date, opt => opt.MapFrom(s => s.Date));
         }
     }

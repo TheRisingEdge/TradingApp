@@ -10,7 +10,7 @@ export type Trade = {
 }
 
 export type FilterTradesRequest = {
-    tradeId?: number,
+    tradeId?: string,
     date?: Date
 }
 
@@ -23,8 +23,13 @@ export class DeleteTradesRequest {
 }
 
 export async function filterTrades(request: FilterTradesRequest): Promise<Trade[]> {
-    var result = await fetch('/api/trades')
-    var data = await result.json();
+    var params = new URLSearchParams();
+    request.tradeId && params.append("tradeId", request.tradeId);
+    request.date && params.append("date", request.date.toLocaleDateString());
+
+    var httpResponse = await fetch(`/api/trades?${params.toString()}`);
+    var data = await httpResponse.json();
+
     return data.trades as Trade[];
 }
 

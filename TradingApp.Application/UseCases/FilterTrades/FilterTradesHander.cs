@@ -11,7 +11,7 @@ namespace TradingApp.Application
 {
     public class FilterTradesRequest : IRequest<FilterTradesResponse>
     {
-        public DateTime? StartDate { get; set; }
+        public DateTime? Date { get; set; }
         public string TradeId { get; set; }
     }
 
@@ -34,8 +34,8 @@ namespace TradingApp.Application
         public async Task<FilterTradesResponse> Handle(FilterTradesRequest request, CancellationToken cancellationToken)
         {
             var trades = await _context.Trades
-                .FilterBy(request.StartDate.AsMaybe(), startDate => trade => trade.Date > startDate)
-                .FilterBy(request.TradeId.AsMaybe(), tradeId => trade => trade.TradeId.Value.Contains(tradeId))
+                .FilterBy(request.Date.AsMaybe(), startDate => trade => trade.Date > startDate)
+                .FilterBy(request.TradeId.AsMaybe(), tradeId => trade => trade.TradeId.Contains(tradeId))
                 .ProjectTo<TradeDto>(_mapper)
                 .ToListAsync(cancellationToken);
 
