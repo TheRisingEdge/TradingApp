@@ -7,7 +7,7 @@ import {
 import { AppMenu } from "./AppMenu";
 
 import { AppRoutes } from "./AppRoutes"
-import { CreateTrade } from "./pages/createTrade/CreateTrade.page";
+import { CreateTradePage } from "./pages/createTrade/CreateTrade.page";
 import { Trades } from "./pages/viewTrades/ViewTrades.page";
 
 export default function App() {
@@ -15,7 +15,7 @@ export default function App() {
         <Router>
             <AppMenu />
             <Switch>
-                <Route path={AppRoutes.createTrade} component={CreateTrade}/>
+                <Route path={AppRoutes.createTrade} component={CreateTradePage}/>
                 <Route path={AppRoutes.home} component={Trades}/>
             </Switch>
         </Router>

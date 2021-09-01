@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import * as Yup from 'yup';
+import { TradeFormValidations } from "./CreateTrade.form.validations";
 
 export type FormValues = {
     securityCode: string,
@@ -20,20 +20,6 @@ const initialFormValues: FormValues = {
     date: new Date()
 };
 
-const validationSchema = Yup.object().shape({
-    securityCode: Yup.string()
-        .matches(/^[A-Z]{3}$/, "3 Upper alphas")
-        .required('Required'),
-    sequenceNumberLength: Yup.number()
-        .required("Required"),
-    sequenceNumber: Yup.string()
-        .required('Required'),
-    price: Yup.number()
-        .required('Required'),
-    date: Yup.date()
-        .required('Required')
-});
-
 export type CreateTradeFormProps = {
     onSubmit: (v: FormValues) => Promise<any>;
 };
@@ -48,7 +34,7 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
         <div>
             <Formik
                 initialValues={initialFormValues}
-                validationSchema={validationSchema}
+                validationSchema={TradeFormValidations}
                 onSubmit={onFormikSubmit}>
 
                 {({ values, setFieldValue, errors }) => (
@@ -61,7 +47,7 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
                         <span>{errors.securityCode}</span>
                         <br />
 
-                        <label htmlFor="sequenceNumberLength">X</label>
+                        <label htmlFor="sequenceNumberLength">SequenceNumber Length</label>
                         <Field
                             id="sequenceNumberLength"
                             name="sequenceNumberLength"
@@ -94,7 +80,7 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
                             onChange={date => setFieldValue('date', date)} />
                         <br />
 
-                        <button type="submit">Submit</button>
+                        <button type="submit">Create Trade</button>
                     </Form>
                 )}
             </Formik>

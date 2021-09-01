@@ -34,9 +34,11 @@ export function ViewTradesGrid(props: ViewTradesGridProps) {
                 rowData={props.trades}
                 onSelectionChanged={onSelectionChanged}>
 
-                <AgGridColumn field="make" filter={true} checkboxSelection={true}></AgGridColumn>
-                <AgGridColumn field="model"></AgGridColumn>
+                <AgGridColumn field="tradeId" filter={true} checkboxSelection={true}></AgGridColumn>
+                <AgGridColumn field="securityCode"></AgGridColumn>
+                <AgGridColumn field="sequenceNumber"></AgGridColumn>
                 <AgGridColumn field="price"></AgGridColumn>
+                <AgGridColumn field="date"></AgGridColumn>
             </AgGridReact>
 
         </div>
