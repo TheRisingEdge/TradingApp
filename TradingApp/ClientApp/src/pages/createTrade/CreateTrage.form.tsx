@@ -75,7 +75,7 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
                             onChange={date => date.map(d => setFieldValue('date', d))}/>
                         <br />
 
-                        <button type="submit">Create Trade</button>
+                        <button type="submit" className='btn btn-primary'>Create Trade</button>
                     </Form>
                 )}
             </Formik>

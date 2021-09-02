@@ -7,6 +7,6 @@ type DeleteButtonProps = {
 
 export function DeleteButton(props: DeleteButtonProps) {
     return (
-        <input type="button" value={props.text} onClick={props.callback}/>
+        <input type="button" className="btn btn-primary" value={props.text} onClick={props.callback}/>
     );
 }

@@ -16,6 +16,7 @@ namespace TradingApp.Infrastructure
         public TradingContext(EfContextImplementation efContext)
         {
             _efContext = efContext;
+            efContext.Database.EnsureCreated();
         }
 
         public T Add<T>(T t) where T : class, IHasId => _efContext.Add(t).Entity;

@@ -20,8 +20,9 @@ export function TradesSearchBox(props: TradeSearchBoxProps) {
             <AppDatePicker onChange={maybeDate => setDate(maybeDate)} />
 
             <input
-                type="submit"
+                type="button"
                 value="Search"
+                className="btn btn-primary"
                 style={{display: "inline-block"}}
                 onClick={x => props.onSearch(tradeId, date)} />
         </>

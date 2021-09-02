@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace TradingApp.Application
 {
@@ -37,6 +38,7 @@ namespace TradingApp.Application
                 .FilterBy(request.Date.AsMaybe(), startDate => trade => trade.Date > startDate)
                 .FilterBy(request.TradeId.AsMaybe(), tradeId => trade => trade.TradeId.Contains(tradeId))
                 .ProjectTo<TradeDto>(_mapper)
+                .OrderByDescending(x => x.Date)
                 .ToListAsync(cancellationToken);
 
             return new FilterTradesResponse()
