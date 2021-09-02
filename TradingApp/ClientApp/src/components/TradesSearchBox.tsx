@@ -1,31 +1,29 @@
-import { unknown } from "purify-ts";
+import { Maybe } from "purify-ts";
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { AppDatePicker } from "./AppDatePicker";
 
 export type TradeSearchBoxProps = {
-    onSearch: (tradeId?: string, date?: Date) => void;
+    onSearch: (tradeId: Maybe<string>, date: Maybe<Date>) => void;
 }
 
 export function TradesSearchBox(props: TradeSearchBoxProps) {
-    const [tradeId, setTradeId] = useState<string | undefined>(undefined);
-    const [date, setDate] = useState<Date | undefined>(undefined);
+    const [tradeId, setTradeId] = useState<Maybe<string>>(Maybe.empty());
+    const [date, setDate] = useState<Maybe<Date>>(Maybe.empty());
 
     return (
         <>
             <input
                 type='text'
                 placeholder="TradeId"
-                onChange={e => setTradeId(e.target.value)} />
+                onChange={e => setTradeId(Maybe.fromFalsy(e.target.value))} />
 
-            <DatePicker
-                selected={date}
-                dateFormat="MMMM d, yyyy"
-                className="form-control"
-                name="startDate"
-                onChange={date => setDate(date as Date)} />
+            <AppDatePicker onChange={maybeDate => setDate(maybeDate)} />
 
-            <input type="submit" value="Search" onClick={x => props.onSearch(tradeId, date)} />
+            <input
+                type="submit"
+                value="Search"
+                style={{display: "inline-block"}}
+                onClick={x => props.onSearch(tradeId, date)} />
         </>
     );
 }

@@ -27,7 +27,7 @@ export function ViewTradesGrid(props: ViewTradesGridProps) {
     }
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 500, width: 800 }}>
+        <div className="ag-theme-alpine" style={{ height: 600 }}>
 
             <AgGridReact
                 rowSelection={'multiple'}

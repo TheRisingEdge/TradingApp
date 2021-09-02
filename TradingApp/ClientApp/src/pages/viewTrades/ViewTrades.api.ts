@@ -1,4 +1,4 @@
-import { Either, Left, Right } from "purify-ts";
+import { Either, Left, Maybe, Right } from "purify-ts";
 
 export type Trade = {
     id: number,
@@ -10,8 +10,8 @@ export type Trade = {
 }
 
 export type FilterTradesRequest = {
-    tradeId?: string,
-    date?: Date
+    tradeId: Maybe<string>,
+    date: Maybe<Date>
 }
 
 export class DeleteTradesRequest {
@@ -24,8 +24,8 @@ export class DeleteTradesRequest {
 
 export async function filterTrades(request: FilterTradesRequest): Promise<Trade[]> {
     var params = new URLSearchParams();
-    request.tradeId && params.append("tradeId", request.tradeId);
-    request.date && params.append("date", request.date.toLocaleDateString());
+    request.tradeId.ifJust(tid => params.append("tradeId", tid));
+    request.date.ifJust(d => params.append("date", d.toISOString()));
 
     var httpResponse = await fetch(`/api/trades?${params.toString()}`);
     var data = await httpResponse.json();

@@ -1,8 +1,7 @@
 import React from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { TradeFormValidations } from "./CreateTrade.form.validations";
+import {AppDatePicker} from "../../components/AppDatePicker";
 
 export type FormValues = {
     securityCode: string,
@@ -14,7 +13,7 @@ export type FormValues = {
 
 const initialFormValues: FormValues = {
     securityCode: "",
-    sequenceNumberLength: 0,
+    sequenceNumberLength: 2,
     sequenceNumber: "",
     price: 10,
     date: new Date()
@@ -51,7 +50,7 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
                         <Field
                             id="sequenceNumberLength"
                             name="sequenceNumberLength"
-                            placeholder="X = ?" />
+                            placeholder="X" />
                         <span>{errors.sequenceNumberLength}</span>
                         <br />
 
@@ -72,12 +71,8 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
                         <br />
 
                         <label htmlFor="date">Date</label>
-                        <DatePicker
-                            selected={values.date}
-                            dateFormat="MMMM d, yyyy"
-                            className="form-control"
-                            name="startDate"
-                            onChange={date => setFieldValue('date', date)} />
+                        <AppDatePicker 
+                            onChange={date => date.map(d => setFieldValue('date', d))}/>
                         <br />
 
                         <button type="submit">Create Trade</button>

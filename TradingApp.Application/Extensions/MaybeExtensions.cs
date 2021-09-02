@@ -11,9 +11,11 @@ namespace TradingApp.Application
                 Maybe.None;
         }
 
-        public static Maybe<T> AsMaybe<T>(this T @this) where T : class
+        public static Maybe<string> AsMaybe(this string @this)
         {
-            return Maybe.From(@this);
+            return string.IsNullOrWhiteSpace(@this) ?
+                Maybe.None :
+                Maybe.From<string>(@this);
         }
     }
 }

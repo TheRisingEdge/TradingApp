@@ -1,16 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { AppRoutes } from "./AppRoutes";
+import "./AppMenu.style.css";
 
 export function AppMenu() {
     return (
         <nav>
-            <span>
-                <Link to={AppRoutes.home}>Trades</Link>
-            </span>
-            <span>
-                <Link to={AppRoutes.createTrade}>Create Trade</Link>
-            </span>
+            {LinkTo(AppRoutes.home, "Trades")}
+            {LinkTo(AppRoutes.createTrade, "Create Trade")}
         </nav>
     );
+}
+
+function LinkTo(route: string, text: string) {
+    return <span className="myLink">
+        <Link to={route}>{text}</Link>
+    </span>
 }

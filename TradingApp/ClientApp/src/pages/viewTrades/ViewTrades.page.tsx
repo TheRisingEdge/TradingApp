@@ -20,8 +20,11 @@ export function Trades() {
     const onSelectionChanged = (rows: TradeGridRow[]) =>
         setSelectedRows(rows);
 
-    const fetchAllTrades = () => 
-        fetchTradesWith({});
+    const fetchAllTrades = () =>
+        fetchTradesWith({
+            tradeId: Maybe.empty(),
+            date: Maybe.empty()
+        });
 
     const fetchTradesWith = (filter: FilterTradesRequest) =>
         filterTrades(filter)
@@ -31,8 +34,8 @@ export function Trades() {
         tryDelete(selectedRows)
             .map(deleting => deleting.then(fetchAllTrades))
 
-    const onSearch = (tradeId?: string, date?: Date) =>
-        fetchTradesWith({tradeId, date});
+    const onSearch = (tradeId: Maybe<string>, date: Maybe<Date>) =>
+        fetchTradesWith({ tradeId, date });
 
     useEffect(() => {
         fetchAllTrades()

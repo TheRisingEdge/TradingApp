@@ -9,7 +9,7 @@ namespace TradingApp.Domain
         private SequenceNumber() { }
 
         public static Result<SequenceNumber> TryCreate(string value, int x) => value
-            .Ensure(v => v.Length == x, "Sequence number length must match X")
+            .Ensure(v => v.Length == x, "Sequence number must match it's own length (X)")
             .Map(v => new SequenceNumber() { Value = v });
     }
 }
