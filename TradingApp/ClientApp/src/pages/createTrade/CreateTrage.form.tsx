@@ -1,9 +1,9 @@
 import React from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import { TradeFormValidations } from "./CreateTrade.form.validations";
-import {AppDatePicker} from "../../components/AppDatePicker";
+import { AppDatePicker } from "../../components/AppDatePicker";
 
-export type FormValues = {
+export type ValidatedFormValues = {
     securityCode: string,
     sequenceNumberLength: number,
     sequenceNumber: string,
@@ -11,21 +11,17 @@ export type FormValues = {
     date: Date
 }
 
-const initialFormValues: FormValues = {
-    securityCode: "",
-    sequenceNumberLength: 2,
-    sequenceNumber: "",
-    price: 10,
-    date: new Date()
-};
+type RawFormValues = Partial<ValidatedFormValues>;
+
+const initialFormValues: RawFormValues = {};
 
 export type CreateTradeFormProps = {
-    onSubmit: (v: FormValues) => Promise<any>;
+    onSubmit: (v: ValidatedFormValues) => Promise<any>;
 };
 
 export function CreateTradeForm(props: CreateTradeFormProps) {
-    const onFormikSubmit = (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
-        props.onSubmit(values)
+    const onFormikSubmit = (values: RawFormValues, { setSubmitting }: FormikHelpers<RawFormValues>) => {
+        props.onSubmit(values as ValidatedFormValues)
             .then(() => setSubmitting(false));
     }
 
@@ -71,8 +67,9 @@ export function CreateTradeForm(props: CreateTradeFormProps) {
                         <br />
 
                         <label htmlFor="date">Date</label>
-                        <AppDatePicker 
-                            onChange={date => date.map(d => setFieldValue('date', d))}/>
+                        <AppDatePicker
+                            onChange={date => date.map(d => setFieldValue('date', d))} />
+                        <span>{errors.date}</span>
                         <br />
 
                         <button type="submit" className='btn btn-primary'>Create Trade</button>
