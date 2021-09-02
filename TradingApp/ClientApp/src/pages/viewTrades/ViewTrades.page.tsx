@@ -2,43 +2,38 @@ import React, { useEffect, useState } from "react";
 import { TradesSearchBox } from "../../components/TradesSearchBox";
 import { DeleteButton } from "../../components/DeleteButton";
 import { TradeGridRow, ViewTradesGrid } from "./ViewTrades.grid";
-import { deleteTrades, DeleteTradesRequest, DeleteTradesResponse, filterTrades, FilterTradesRequest } from "./ViewTrades.api";
+import { filterTrades, FilterTradesRequest, deleteTrades, DeleteTradesRequest } from "./ViewTrades.api";
 import { Maybe, NonEmptyList } from "purify-ts";
 
-function tryDelete(selectedRows: TradeGridRow[]): Maybe<Promise<DeleteTradesResponse>> {
-    var ids = selectedRows.map(r => r.id);
-
-    return NonEmptyList.fromArray(ids)
-        .map(theIds => new DeleteTradesRequest(theIds))
-        .map(request => deleteTrades(request));
-}
+const allTradesFilter: FilterTradesRequest = {
+    tradeId: Maybe.empty(),
+    date: Maybe.empty()
+};
 
 export function Trades() {
     const [trades, setTrades] = useState<TradeGridRow[]>([]);
     const [selectedRows, setSelectedRows] = useState<TradeGridRow[]>([]);
 
-    const onSelectionChanged = (rows: TradeGridRow[]) =>
-        setSelectedRows(rows);
+    const onSelectionChanged = (rows: TradeGridRow[]) => setSelectedRows(rows);
 
-    const fetchAllTrades = () =>
-        fetchTradesWith({
-            tradeId: Maybe.empty(),
-            date: Maybe.empty()
-        });
+    const showAllTrades = () => showTradesFor(allTradesFilter);
 
-    const fetchTradesWith = (filter: FilterTradesRequest) =>
+    const showTradesFor = (filter: FilterTradesRequest) =>
         filterTrades(filter)
-            .then(trades => setTrades(trades));
+            .then(trades => setTrades(trades))
+            .then(() => setSelectedRows([]));
 
     const onDelete = () =>
-        tryDelete(selectedRows)
-            .map(deleting => deleting.then(fetchAllTrades))
+        NonEmptyList.fromArray(selectedRows.map(x => x.id))
+            .map(ids => deleteTrades(new DeleteTradesRequest(ids)))
+            .map(deleting => deleting
+                .then(showAllTrades));
 
     const onSearch = (tradeId: Maybe<string>, date: Maybe<Date>) =>
-        fetchTradesWith({ tradeId, date });
+        showTradesFor({ tradeId, date });
 
     useEffect(() => {
-        fetchAllTrades()
+        showAllTrades()
     }, []);
 
     return (<>
