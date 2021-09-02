@@ -1,8 +1,7 @@
 # TradingApp
 
 
-#Running
-In the repo:
+#Build and Run
 
 ```
 cd TradingApp/ClientApp
@@ -12,3 +11,5 @@ npm run build
 cd ..
 dotnet run
 ```
+
+Should run on localhost:5000
