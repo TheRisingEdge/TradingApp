@@ -1,7 +1,8 @@
 # TradingApp
 
 
-#Build and Run
+## Build and Run
+### In the repository
 
 ```
 cd TradingApp/ClientApp
